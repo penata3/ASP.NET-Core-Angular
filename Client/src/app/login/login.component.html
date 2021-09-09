@@ -1,0 +1,23 @@
+<div class="col-md-4"></div>
+<div class='container col-md-4'>
+    <form [formGroup]='form' (ngSubmit)='login()'>
+        <div class="mb-3">
+            <label class="form-label">Username</label>
+            <input type="text" class="form-control" formControlName='username'>
+        </div>
+        <ng-container *ngIf='username?.touched && username?.errors'>
+            <p class="alert alert-danger" *ngIf='username?.errors?.required'>Username is required</p>
+            <p class="alert alert-danger" *ngIf='username?.errors?.minlength'>Username should be at least 6 chars long</p>
+        </ng-container>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Password</label>
+            <input type="password" class="form-control" formControlName='password'>
+        </div>
+        <ng-container *ngIf='password?.touched && password?.errors'>
+            <p class="alert alert-danger" *ngIf='password?.errors?.required'>Password is required</p>
+            <p class="alert alert-danger" *ngIf='password?.errors?.minlength'>Password should be at least 6 chars long</p>
+        </ng-container>
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+</div>
+<div class="col-md-4"></div>
