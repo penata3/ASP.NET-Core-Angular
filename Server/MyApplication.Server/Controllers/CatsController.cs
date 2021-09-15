@@ -2,20 +2,47 @@
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using System.Linq;
+    using MyApplication.Server.Data;
+    using MyApplication.Server.Data.Models;
+    using MyApplication.Server.Models;
     using System.Security.Claims;
+    using System.Threading.Tasks;
 
     public class CatsController : ApiController
     {
 
-        [Authorize]
-        public ActionResult<string> Get()
+        //TODO: Refactor and add service layer
+        private readonly MyApplicationDbContext dbContext;
+
+        public CatsController(MyApplicationDbContext dbContext)
         {
-            //var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            this.dbContext = dbContext;
+        }
 
-            var userId = this.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
 
-            return userId;
+        [HttpGet]
+        public ActionResult<string> Get() 
+        {
+            return this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        }
+
+
+        [Authorize]
+        [HttpPost]
+        public async Task<ActionResult<int>> Create(CreateCatModel model)
+        {
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            var cat = new Cat()
+            {
+                Description = model.Description,
+                ImageUrl = model.ImageUrl,
+                UserId = userId
+            };
+
+            await this.dbContext.Cats.AddAsync(cat);
+            await this.dbContext.SaveChangesAsync();
+            return cat.Id;         
         }
     }
 }
