@@ -11,7 +11,7 @@
         {
         }
 
-        public DbSet<Cat> Cats {get;set; }
+        public DbSet<Cat> Cats { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -21,7 +21,7 @@
                 .WithMany(u => u.Cats)
                 .HasForeignKey(c => c.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
-               
+
 
             base.OnModelCreating(builder);
         }

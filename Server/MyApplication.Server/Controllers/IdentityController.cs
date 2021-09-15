@@ -4,8 +4,8 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Options;
     using Microsoft.IdentityModel.Tokens;
-    using MyApplication.Server.Data.Models;
-    using MyApplication.Server.Models.Identity;
+    using Server.Data.Models;
+    using Server.Models.Identity;
     using System;
     using System.IdentityModel.Tokens.Jwt;
     using System.Security.Claims;
@@ -25,7 +25,7 @@
         }
 
         [Route(nameof(Register))]
-        public async Task<ActionResult> Register(RegisterUserModel model) 
+        public async Task<ActionResult> Register(RegisterUserModel model)
         {
 
             var user = new User()
@@ -36,7 +36,8 @@
 
             var result = await this.userManager.CreateAsync(user, model.Password);
 
-            if (result.Succeeded) {
+            if (result.Succeeded)
+            {
                 return Ok();
             }
 
@@ -46,33 +47,36 @@
 
 
         [Route(nameof(Login))]
-        public async Task<ActionResult<object>> Login(LoginUserModel model) 
+        public async Task<ActionResult<object>> Login(LoginUserModel model)
         {
             var user = await this.userManager.FindByNameAsync(model.Username);
 
-            if (user == null) 
+            if (user == null)
             {
                 return BadRequest();
             }
 
 
-            var isPasswordValid = await this.userManager.CheckPasswordAsync(user,model.Password);
+            var isPasswordValid = await this.userManager.CheckPasswordAsync(user, model.Password);
 
-            if (!isPasswordValid) 
+            if (!isPasswordValid)
             {
                 return BadRequest();
             }
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(this.appSettings.Secret);
+
+
             var tokenDescriptor = new SecurityTokenDescriptor()
             {
                 Subject = new ClaimsIdentity(new Claim[] {
                     new Claim(ClaimTypes.NameIdentifier, user.Id),
                      new Claim(ClaimTypes.Name, user.UserName)
-                }),
+            }),
                 Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
+
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);

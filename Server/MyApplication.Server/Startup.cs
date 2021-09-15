@@ -16,36 +16,34 @@ namespace MyApplication.Server
 
     public class Startup
     {
-        public Startup(IConfiguration configuration) => Configuration = configuration;
+        public Startup(IConfiguration configuration) => this.Configuration = configuration;
 
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors();
 
-            services.AddDbContext<MyApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+            services
+               .AddDbContext<MyApplicationDbContext>(options => options
+                   .UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<User, IdentityRole>(opt => {
+            services
+                .AddIdentity<User, IdentityRole>(options =>
+                {
+                    options.Password.RequiredLength = 6;
+                    options.Password.RequireDigit = false;
+                    options.Password.RequireLowercase = false;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = false;
+                })
+                .AddEntityFrameworkStores<MyApplicationDbContext>();
 
-                opt.Password.RequiredLength = 6;
-                opt.Password.RequireNonAlphanumeric = false;
-                opt.Password.RequireLowercase = false;
-                opt.Password.RequireDigit = false;
-                opt.Password.RequireNonAlphanumeric = false;
-            })
-             .AddEntityFrameworkStores<MyApplicationDbContext>();
+            var applicationSettingsConfiguration = this.Configuration.GetSection("ApplicationSettings");
+            services.Configure<ApplicationSettings>(applicationSettingsConfiguration);
 
-            var appSettingsSection = Configuration.GetSection("ApplicationSettings");
-            services.Configure<ApplicationSettings>(appSettingsSection);
-
-
-            var appSettings = appSettingsSection.Get<ApplicationSettings>();
+            var appSettings = applicationSettingsConfiguration.Get<ApplicationSettings>();
             var key = Encoding.ASCII.GetBytes(appSettings.Secret);
-
 
 
             services.AddAuthentication(x =>
@@ -57,13 +55,12 @@ namespace MyApplication.Server
                 {
                     x.RequireHttpsMetadata = false;
                     x.SaveToken = true;
-
                     x.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(key),
                         ValidateIssuer = false,
-                        ValidateActor = false
+                        ValidateAudience = false,
                     };
                 });
 
@@ -72,27 +69,23 @@ namespace MyApplication.Server
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+       
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-     
+            if (env.IsDevelopment())
+            {
                 app.UseDeveloperExceptionPage();
-               //app.UseDatabaseErrorPage();
-     
+            }
+
             app.UseRouting();
 
+            app.UseCors(options => options
+                .AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod());
+
             app.UseAuthentication();
-
             app.UseAuthorization();
-
-            app.UseCors(x => x
-                 .AllowAnyOrigin()
-                 .AllowAnyMethod()
-                 .AllowAnyHeader());
-
-            //app.UseMiddleware<JwtMiddleware>();
-
-
-           
 
             app.UseEndpoints(endpoints =>
             {
@@ -100,8 +93,6 @@ namespace MyApplication.Server
             });
 
             app.ApplyMigrations();
-
-
         }
     }
 }
