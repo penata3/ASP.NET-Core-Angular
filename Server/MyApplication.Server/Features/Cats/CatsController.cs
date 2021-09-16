@@ -16,13 +16,6 @@
         }
 
 
-        [HttpGet]
-        public ActionResult<string> Get()
-        {
-            return this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-        }
-
-
         [Authorize]
         [HttpPost]
         public async Task<ActionResult<int>> Create(CreateCatModel model)

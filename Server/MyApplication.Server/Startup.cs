@@ -23,6 +23,7 @@ namespace MyApplication.Server
                 .AddIdentity()
                 .AddJwtAuthentication(services.GetApplicationSettings(this.Configuration))
                 .AddApplicationServices()
+                .AddSwaggerGen()
                 .AddControllers();
                                
         }
@@ -32,7 +33,8 @@ namespace MyApplication.Server
         public void Configure(IApplicationBuilder app)
         {
 
-                app
+            app
+          .UseSwaggerUI()
                 .UseDeveloperExceptionPage().UseRouting()
                 .UserCors()
                 .UseAuthentication()

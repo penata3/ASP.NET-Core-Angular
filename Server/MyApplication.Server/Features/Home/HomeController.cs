@@ -8,6 +8,7 @@
 
     public class HomeController: ApiController
     {
+        [HttpGet]
         [Authorize]
         public ActionResult<List<string>> Get() 
         {

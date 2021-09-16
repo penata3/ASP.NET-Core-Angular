@@ -24,6 +24,7 @@
 
         }
 
+        [HttpPost]
         [Route(nameof(Register))]
         public async Task<ActionResult> Register(RegisterUserModel model)
         {
@@ -45,7 +46,7 @@
 
         }
 
-
+        [HttpPost]
         [Route(nameof(Login))]
         public async Task<ActionResult<object>> Login(LoginUserModel model)
         {
