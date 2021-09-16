@@ -16,5 +16,14 @@
 
             dbContext.Database.Migrate();
         }
+
+
+        public static IApplicationBuilder UserCors(this IApplicationBuilder app)
+            =>
+                app.UseCors(options => options
+                  .AllowAnyOrigin()
+                  .AllowAnyHeader()
+                  .AllowAnyMethod());
     }
+
 }

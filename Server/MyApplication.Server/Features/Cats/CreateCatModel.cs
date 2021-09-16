@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace MyApplication.Server.Models
+﻿namespace MyApplication.Server.Features.Cats
 {
+    using System.ComponentModel.DataAnnotations;
+
     public class CreateCatModel
     {
         [Required]

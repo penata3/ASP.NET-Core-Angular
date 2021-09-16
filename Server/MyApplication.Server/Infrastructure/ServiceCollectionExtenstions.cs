@@ -10,6 +10,8 @@ namespace MyApplication.Server.Infrastructure
     using Microsoft.IdentityModel.Tokens;
     using MyApplication.Server.Data;
     using MyApplication.Server.Data.Models;
+    using MyApplication.Server.Features.Cats;
+    using MyApplication.Server.Features.Identity;
     using System.Text;
 
     public static class ServiceCollectionExtenstions
@@ -70,6 +72,14 @@ namespace MyApplication.Server.Infrastructure
                 });
 
             return services;
+        }
+
+
+        public static IServiceCollection AddApplicationServices(this IServiceCollection app) 
+        {
+            app.AddTransient<IIdentityService, IdentityService>();
+            app.AddTransient<ICatsService, CatsService>();
+            return app;
         }
     }
 }

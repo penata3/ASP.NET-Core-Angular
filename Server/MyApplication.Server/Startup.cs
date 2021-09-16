@@ -6,6 +6,7 @@ namespace MyApplication.Server
     using Microsoft.AspNetCore.Builder;
     using System.Text;
     using MyApplication.Server.Infrastructure;
+    using MyApplication.Server.Features.Identity;
 
     public class Startup
     {
@@ -21,7 +22,9 @@ namespace MyApplication.Server
                 .AddDatabase(this.Configuration)
                 .AddIdentity()
                 .AddJwtAuthentication(services.GetApplicationSettings(this.Configuration))
+                .AddApplicationServices()
                 .AddControllers();
+                               
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -31,10 +34,7 @@ namespace MyApplication.Server
 
                 app
                 .UseDeveloperExceptionPage().UseRouting()
-                .UseCors(options => options
-                    .AllowAnyOrigin()
-                    .AllowAnyHeader()
-                    .AllowAnyMethod())
+                .UserCors()
                 .UseAuthentication()
                 .UseAuthorization()
                 .UseEndpoints(endpoints =>

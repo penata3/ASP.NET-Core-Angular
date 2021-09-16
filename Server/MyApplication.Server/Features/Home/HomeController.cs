@@ -1,7 +1,8 @@
-﻿namespace MyApplication.Server.Controllers
+﻿namespace MyApplication.Server.Features.Home
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using MyApplication.Server.Features;
     using System.Collections.Generic;
 
 

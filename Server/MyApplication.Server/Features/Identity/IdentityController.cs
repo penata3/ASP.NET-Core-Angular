@@ -1,11 +1,10 @@
-﻿namespace MyApplication.Server.Controllers
+﻿namespace MyApplication.Server.Features.Identity
 {
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Options;
     using Microsoft.IdentityModel.Tokens;
     using Server.Data.Models;
-    using Server.Models.Identity;
     using System;
     using System.IdentityModel.Tokens.Jwt;
     using System.Security.Claims;
@@ -15,13 +14,14 @@
     public class IdentityController : ApiController
     {
         private readonly UserManager<User> userManager;
-        private readonly ApplicationSettings appSettings;
+        private readonly IIdentityService identityService;
 
         public IdentityController(UserManager<User> userManager,
-             IOptions<ApplicationSettings> appSettings)
+             IIdentityService identityService)
         {
             this.userManager = userManager;
-            this.appSettings = appSettings.Value;
+            this.identityService = identityService;
+
         }
 
         [Route(nameof(Register))]
@@ -56,7 +56,6 @@
                 return BadRequest();
             }
 
-
             var isPasswordValid = await this.userManager.CheckPasswordAsync(user, model.Password);
 
             if (!isPasswordValid)
@@ -64,26 +63,11 @@
                 return BadRequest();
             }
 
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(this.appSettings.Secret);
-
-
-            var tokenDescriptor = new SecurityTokenDescriptor()
-            {
-                Subject = new ClaimsIdentity(new Claim[] {
-                    new Claim(ClaimTypes.NameIdentifier, user.Id),
-                    new Claim(ClaimTypes.Name, user.UserName)
-            }),
-                Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
-            };
-
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            var encryptedToken = tokenHandler.WriteToken(token);
+            var token = this.identityService.GenerateJwtToken(user.Id, user.UserName);
 
             return new
             {
-                Token = encryptedToken
+                Token = token
             };
 
         }
