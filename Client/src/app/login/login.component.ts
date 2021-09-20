@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms'
+import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -13,7 +14,8 @@ export class LoginComponent  {
 
   constructor(
     private fb:FormBuilder,
-    private authService: AuthService) { 
+    private authService: AuthService,
+    private router: Router) { 
     this.form = this.fb.group({
       username: ['',[Validators.required,Validators.minLength(6)]],
       password: ['',[Validators.required,Validators.minLength(6)]]
@@ -33,14 +35,18 @@ export class LoginComponent  {
     if(this.form.invalid){return }
 
     this.authService.login(this.form.value).subscribe(
-      response => this.authService.setToken(response.token),
-     error => {
-       console.log(error.error.text);
-     }
+      {
+        next: (response) => {
+          this.authService.setToken(response.token),
+          this.router.navigate(['/'])
+        },
+        error: (error) => {
+          console.log(error);
+        }
+      }
+    
     )
-
-    this.form.reset();
-     
+    this.form.reset();     
   }
 
 

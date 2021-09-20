@@ -44,7 +44,12 @@ export class RegisterComponent {
     //console.log(this.form.value);
 
     this.authService.register(this.form.value).subscribe(
-      data => console.log(data)
+      //data => console.log(data)
+      {
+        next: () => {
+          this.router.navigate(['login'])
+        }
+      }
     )
 
        
