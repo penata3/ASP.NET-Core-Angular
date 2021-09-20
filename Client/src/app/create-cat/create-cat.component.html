@@ -1,0 +1,18 @@
+<div class="col-md-4"></div>
+<div class='container col-md-4'>
+    <form [formGroup]='catForm' (ngSubmit)='create()'>
+        <div class="mb-3">
+            <label class="form-label">ImageUrl</label>
+            <input type="text" class="form-control" formControlName='ImageUrl'>
+        </div>
+        <ng-container *ngIf='imageUrl?.touched && imageUrl?.errors'>
+            <p *ngIf='imageUrl?.errors?.required'> Image is required</p>
+        </ng-container>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Description</label>
+            <textarea class="form-control" formControlName='Description'></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Create</button>
+    </form>
+</div>
+<div class="col-md-4"></div>
