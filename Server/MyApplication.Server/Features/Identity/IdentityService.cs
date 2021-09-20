@@ -16,7 +16,7 @@ namespace MyApplication.Server.Features.Identity
             this.appSettings = appSettings.Value;
         }
 
-        public string GenerateJwtToken(string username, string userId)
+        public string GenerateJwtToken(string userId, string username)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(this.appSettings.Secret);
@@ -25,8 +25,8 @@ namespace MyApplication.Server.Features.Identity
             var tokenDescriptor = new SecurityTokenDescriptor()
             {
                 Subject = new ClaimsIdentity(new Claim[] {
-                    new Claim(ClaimTypes.NameIdentifier, userId),
-                    new Claim(ClaimTypes.Name, username)
+                    new Claim(ClaimTypes.Name, username),
+                    new Claim(ClaimTypes.NameIdentifier, userId)
             }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),

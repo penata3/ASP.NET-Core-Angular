@@ -4,7 +4,7 @@
 
     public class CreateCatModel
     {
-        [Required]
+ 
         [MaxLength(2000)]
         public string Description { get; set; }
         

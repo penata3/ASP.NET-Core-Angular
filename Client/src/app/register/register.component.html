@@ -2,6 +2,9 @@
     <div class="col-md-4"></div>
     <div class="container col-md-4">
         <form [formGroup]='form' (ngSubmit)='register()'>
+            <ng-container *ngIf="errorMessage">
+                {{errorMessage}}
+            </ng-container>
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Username</label>
                 <input type="text" class="form-control" formControlName='username'>

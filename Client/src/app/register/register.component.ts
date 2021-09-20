@@ -1,5 +1,7 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormGroup,FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -10,10 +12,12 @@ import { AuthService } from '../services/auth.service';
 export class RegisterComponent {
 
   form: FormGroup;
+  errorMessage: string| undefined = undefined;
 
   constructor(
     private fb:FormBuilder,
-    private authService: AuthService) {
+    private authService: AuthService,
+    private router: Router) {
     this.form = this.fb.group({
       username: ['',[Validators.required,Validators.minLength(6)]],
       email: ['',[Validators.required,Validators.minLength(6),Validators.email]],
@@ -42,5 +46,9 @@ export class RegisterComponent {
     this.authService.register(this.form.value).subscribe(
       data => console.log(data)
     )
+
+       
   }
+
 }
+
