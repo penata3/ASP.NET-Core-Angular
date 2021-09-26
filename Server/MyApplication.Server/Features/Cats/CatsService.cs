@@ -1,5 +1,8 @@
-﻿using MyApplication.Server.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using MyApplication.Server.Data;
 using MyApplication.Server.Data.Models;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MyApplication.Server.Features.Cats
@@ -11,6 +14,18 @@ namespace MyApplication.Server.Features.Cats
         public CatsService(MyApplicationDbContext db)
         {
             this.db = db;
+        }
+
+        public async Task<IEnumerable<MyCatsResponseModel>> CatsByUsert(string userId)
+        {
+            return  await this.db.Cats.Where(c => c.UserId == userId)
+                 .Select(c => new MyCatsResponseModel
+                 {
+                     Id = c.Id,
+                     ImageUrl = c.ImageUrl,
+                     Description = c.Description
+                 })
+                 .ToListAsync();
         }
 
         public async Task<int> CraeteCat(CreateCatModel model, string userId)

@@ -2,13 +2,8 @@
 {
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Options;
-    using Microsoft.IdentityModel.Tokens;
     using Server.Data.Models;
-    using System;
-    using System.IdentityModel.Tokens.Jwt;
-    using System.Security.Claims;
-    using System.Text;
+
     using System.Threading.Tasks;
 
     public class IdentityController : ApiController

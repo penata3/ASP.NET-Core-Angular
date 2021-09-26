@@ -15,7 +15,6 @@
             this.catsService = catsService;
         }
 
-
         [Authorize]
         [HttpPost]
         public async Task<ActionResult<int>> Create(CreateCatModel model)

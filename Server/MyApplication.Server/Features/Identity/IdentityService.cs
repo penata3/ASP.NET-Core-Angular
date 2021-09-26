@@ -9,17 +9,17 @@ namespace MyApplication.Server.Features.Identity
 
     public class IdentityService : IIdentityService
     {
-        private readonly ApplicationSettings appSettings;
+        private readonly IOptions<ApplicationSettings> appSettings;
 
         public IdentityService(IOptions<ApplicationSettings> appSettings)
         {
-            this.appSettings = appSettings.Value;
+            this.appSettings = appSettings;
         }
 
         public string GenerateJwtToken(string userId, string username)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(this.appSettings.Secret);
+            var key = Encoding.ASCII.GetBytes(this.appSettings.Value.Secret);
 
 
             var tokenDescriptor = new SecurityTokenDescriptor()
