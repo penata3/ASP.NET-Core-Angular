@@ -11,13 +11,15 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CreateCatComponent } from './create-cat/create-cat.component';
 import { AuthGuardService } from './services/auth-guard.service';
 import { TokenInterceptorService } from './services/token-interceptor.service';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    CreateCatComponent
+    CreateCatComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
