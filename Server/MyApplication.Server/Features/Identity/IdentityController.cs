@@ -49,14 +49,14 @@
 
             if (user == null)
             {
-                return BadRequest();
+                return BadRequest("Invalid Username or Password");
             }
 
             var isPasswordValid = await this.userManager.CheckPasswordAsync(user, model.Password);
 
             if (!isPasswordValid)
             {
-                return BadRequest();
+                return BadRequest("Invalid Username or Password"); 
             }
 
             var token = this.identityService.GenerateJwtToken(user.Id, user.UserName);

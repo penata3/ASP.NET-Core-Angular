@@ -1,6 +1,9 @@
 <div class="col-md-4"></div>
-<div class='container col-md-4'>
+<div class='formContainer container col-md-4 login'>
+
     <form [formGroup]='form' (ngSubmit)='login()'>
+
+        <ng-container *ngIf='errorMessage'> {{errorMessage}}</ng-container>
         <div class="mb-3">
             <label class="form-label">Username</label>
             <input type="text" class="form-control" formControlName='username'>
@@ -19,5 +22,6 @@
         </ng-container>
         <button type="submit" class="btn btn-primary">Login</button>
     </form>
+
 </div>
 <div class="col-md-4"></div>

@@ -11,6 +11,7 @@ import { AuthService } from '../services/auth.service';
 export class LoginComponent  {
 
   form: FormGroup;
+  errorMessage: string| undefined = undefined;
 
   constructor(
     private fb:FormBuilder,
@@ -41,7 +42,7 @@ export class LoginComponent  {
           this.router.navigate(['/'])
         },
         error: (error) => {
-          console.log(error);
+          this.errorMessage = error.error;
         }
       }
     

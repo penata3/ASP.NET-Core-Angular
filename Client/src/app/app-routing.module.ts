@@ -4,15 +4,16 @@ import { CreateCatComponent } from './create-cat/create-cat.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthGuardService } from './services/auth-guard.service';
+import { SecondaryAuthGuardService } from './services/secondary-auth-guard.service';
 
 const routes: Routes = [ 
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,canActivate: [SecondaryAuthGuardService]
   },
   {
     path: 'register',
-    component: RegisterComponent
+    component: RegisterComponent,canActivate: [SecondaryAuthGuardService]
   },
   { path: 'create', component: CreateCatComponent,canActivate: [AuthGuardService] }
 ];

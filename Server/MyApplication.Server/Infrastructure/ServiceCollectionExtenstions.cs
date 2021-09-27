@@ -75,11 +75,11 @@ namespace MyApplication.Server.Infrastructure
         }
 
 
-        public static IServiceCollection AddApplicationServices(this IServiceCollection app) 
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services) 
         {
-            app.AddTransient<IIdentityService, IdentityService>();
-            app.AddTransient<ICatsService, CatsService>();
-            return app;
+            services.AddTransient<IIdentityService, IdentityService>();
+            services.AddTransient<ICatsService, CatsService>();
+            return services;
         }
     }
 }

@@ -16,10 +16,21 @@ namespace MyApplication.Server.Features.Cats
             this.db = db;
         }
 
-        public async Task<IEnumerable<MyCatsResponseModel>> CatsByUsert(string userId)
+        public async Task<IEnumerable<CatResponseModel>> GetAllCatsAsync()
+        {
+            return await this.db.Cats.Select(c => new CatResponseModel
+            {
+                Id = c.Id,
+                ImageUrl = c.ImageUrl,
+                Description = c.Description
+            })
+              .ToListAsync();
+        }
+
+        public async Task<IEnumerable<CatResponseModel>> CatsByUser(string userId)
         {
             return  await this.db.Cats.Where(c => c.UserId == userId)
-                 .Select(c => new MyCatsResponseModel
+                 .Select(c => new CatResponseModel
                  {
                      Id = c.Id,
                      ImageUrl = c.ImageUrl,

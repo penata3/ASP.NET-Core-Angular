@@ -12,6 +12,8 @@ import { CreateCatComponent } from './create-cat/create-cat.component';
 import { AuthGuardService } from './services/auth-guard.service';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { HeaderComponent } from './header/header.component';
+import { SecondaryAuthGuardService } from './services/secondary-auth-guard.service';
+import { AllCatsComponent } from './all-cats/all-cats.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,8 @@ import { HeaderComponent } from './header/header.component';
     LoginComponent,
     RegisterComponent,
     CreateCatComponent,
-    HeaderComponent
+    HeaderComponent,
+    AllCatsComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +30,7 @@ import { HeaderComponent } from './header/header.component';
     ReactiveFormsModule,
     HttpClientModule,
   ],
-  providers: [AuthService,AuthGuardService,
+  providers: [AuthService,AuthGuardService,SecondaryAuthGuardService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,

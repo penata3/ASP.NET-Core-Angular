@@ -7,6 +7,8 @@
     {
         Task<int> CraeteCat(CreateCatModel model, string userId);
 
-        Task<IEnumerable<MyCatsResponseModel>> CatsByUsert(string userId);
+        Task<IEnumerable<CatResponseModel>> CatsByUser(string userId);
+
+        Task<IEnumerable<CatResponseModel>> GetAllCatsAsync();
     }
 }

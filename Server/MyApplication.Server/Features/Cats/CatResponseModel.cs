@@ -1,6 +1,6 @@
 ﻿namespace MyApplication.Server.Features.Cats
 {
-    public class MyCatsResponseModel
+    public class CatResponseModel
     {
         public int Id { get; set; }
 
