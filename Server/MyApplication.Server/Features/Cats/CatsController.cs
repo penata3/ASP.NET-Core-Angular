@@ -2,7 +2,7 @@
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using MyApplication.Server.Features;
+    using MyApplication.Server.Features.Cats.Models;
     using System.Collections.Generic;
     using System.Security.Claims;
     using System.Threading.Tasks;
@@ -26,24 +26,40 @@
             return catId;
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<CatResponseModel>> GetAll()
-        {
-            var allCats = await this.catsService.GetAllCatsAsync();
-            return allCats;
-        }
+        //[HttpGet]
+        //public async Task<IEnumerable<CatListingServiceModel>> GetAll()
+        //{
+        //    var allCats = await this.catsService.GetAllCatsAsync();
+        //    return allCats;
+        //}
 
 
 
         [HttpGet]
         [Authorize]
-        [Route("AllByUser")]
-        public async Task<IEnumerable<CatResponseModel>> GetAllByUser(string userId)
+        public async Task<IEnumerable<CatListingServiceModel>> GetAllByUser()
         {
-            //var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            var catsByUser = await this.catsService.CatsByUser(userId);
+            var catsByUser = await this.catsService.CatsByUserAsync(userId);
             return catsByUser;
+        }
+
+
+        [Authorize]
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<ActionResult<CatDetailsServiceModel>> Details(int id)
+        {
+            var cat = await this.catsService.ById(id);
+
+            if (cat == null)
+            {
+                BadRequest("No such post");
+            }
+
+            return cat;
+
         }
 
 

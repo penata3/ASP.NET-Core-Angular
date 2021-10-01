@@ -1,5 +1,6 @@
 ﻿namespace MyApplication.Server.Features.Cats
 {
+    using MyApplication.Server.Features.Cats.Models;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
@@ -7,8 +8,12 @@
     {
         Task<int> CraeteCat(CreateCatModel model, string userId);
 
-        Task<IEnumerable<CatResponseModel>> CatsByUser(string userId);
+        Task<IEnumerable<CatListingServiceModel>> CatsByUserAsync(string userId);
 
-        Task<IEnumerable<CatResponseModel>> GetAllCatsAsync();
+        Task<IEnumerable<CatListingServiceModel>> GetAllCatsAsync();
+
+        Task<CatDetailsServiceModel> ById(int id);
+
+
     }
 }
