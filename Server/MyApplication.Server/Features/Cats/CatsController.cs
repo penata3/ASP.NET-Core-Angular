@@ -80,9 +80,11 @@
 
         [HttpDelete]
         [Authorize]
-        public async Task<ActionResult> Delete(int catId)
+        [Route("{id}")]
+        public async Task<ActionResult> Delete(int Id)
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var catId = Id;
 
             var isDeleted = await this.catsService.Delete(userId, catId);
 
@@ -91,7 +93,7 @@
                 return BadRequest("Canot delete this object");
             }
 
-            return Ok();
+            return Ok("Succesfully deleted");
 
         }
     }
