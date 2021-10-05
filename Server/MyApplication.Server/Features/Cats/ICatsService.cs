@@ -14,6 +14,10 @@
 
         Task<CatDetailsServiceModel> ById(int id);
 
+        Task<bool> Update(string userId, int catId, string desctiption);
+
+        Task<bool> Delete(string userId, int catId);
+
 
     }
 }

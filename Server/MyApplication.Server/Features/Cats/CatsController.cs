@@ -33,7 +33,7 @@
         //    return allCats;
         //}
 
-
+        
 
         [HttpGet]
         [Authorize]
@@ -59,9 +59,40 @@
             }
 
             return cat;
+        }
 
+        [HttpPut]
+        [Authorize]
+        public async Task<ActionResult> Update(UpdateCatRequestModel model)
+        {
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            var isUpdated = await this.catsService.Update(userId, model.Id, model.Description);
+
+            if (!isUpdated) 
+            {
+                return BadRequest("Enity canot be updated");
+            }
+
+            return Ok();
         }
 
 
+        [HttpDelete]
+        [Authorize]
+        public async Task<ActionResult> Delete(int catId)
+        {
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            var isDeleted = await this.catsService.Delete(userId, catId);
+
+            if (!isDeleted) 
+            {
+                return BadRequest("Canot delete this object");
+            }
+
+            return Ok();
+
+        }
     }
 }

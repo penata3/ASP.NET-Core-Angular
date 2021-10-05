@@ -45,7 +45,7 @@
         {
             var cat = new Cat()
             {
-                Description = model.Description,
+                Description = model.Description.Trim(),
                 ImageUrl = model.ImageUrl,
                 UserId = userId
             };
@@ -66,5 +66,35 @@
             })
              .FirstOrDefaultAsync();
 
+        public async Task<bool> Update(string userId, int catId,string description)
+        {
+            var catToUpdate = await this.db.Cats.Where(c => c.Id == catId && c.UserId == userId)
+                 .FirstOrDefaultAsync();
+
+            if (catToUpdate == null) 
+            {
+                return false;
+            }
+
+            catToUpdate.Description = description.Trim();
+            await this.db.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task<bool> Delete(string userId, int catId)
+        {
+            var catToDelete = await this.db.Cats.Where(c => c.Id == catId && c.UserId == userId).FirstOrDefaultAsync();
+
+            if (catToDelete == null) 
+            {
+                return false; 
+            }
+
+            this.db.Cats.Remove(catToDelete);
+            await this.db.SaveChangesAsync();
+            return true;
+            
+        }
     }
 }
