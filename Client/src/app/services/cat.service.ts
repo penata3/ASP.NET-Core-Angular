@@ -18,8 +18,13 @@ export class CatService {
     return this.http.post<Cat>(this.catsUrl, data)
   }
 
-  getAll():Observable<Cat[]> {
-  
+  getAll():Observable<Cat[]> { 
     return this.http.get<Cat[]>(this.catsUrl);    
   }
+
+  getCatById(id:string):Observable<Cat> {
+    return this.http.get<Cat>(`${this.catsUrl}/${id}`);
+  }
+
+
 }

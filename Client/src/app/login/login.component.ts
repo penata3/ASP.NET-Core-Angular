@@ -39,7 +39,7 @@ export class LoginComponent  {
       {
         next: (response) => {
           this.authService.setToken(response.token),
-          this.router.navigate(['/'])
+          this.router.navigate(['/all'])
         },
         error: (error) => {
           this.errorMessage = error.error;

@@ -14,6 +14,8 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
 import { HeaderComponent } from './header/header.component';
 import { SecondaryAuthGuardService } from './services/secondary-auth-guard.service';
 import { AllCatsComponent } from './all-cats/all-cats.component';
+import { CatDetailsComponent } from './cat-details/cat-details.component';
+
 
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import { AllCatsComponent } from './all-cats/all-cats.component';
     RegisterComponent,
     CreateCatComponent,
     HeaderComponent,
-    AllCatsComponent
+    AllCatsComponent,
+    CatDetailsComponent
   ],
   imports: [
     BrowserModule,
