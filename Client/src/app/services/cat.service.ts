@@ -26,5 +26,8 @@ export class CatService {
     return this.http.get<Cat>(`${this.catsUrl}/${id}`);
   }
 
+  deleteCat(id:number):Observable<any> {
+    return this.http.delete(`${this.catsUrl}/${id}`);
+  }
 
 }

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
+import { Router } from '@angular/router';
 import { Cat } from '../models/cat';
 import { CatService } from '../services/cat.service';
 
@@ -7,16 +8,35 @@ import { CatService } from '../services/cat.service';
   templateUrl: './all-cats.component.html',
   styleUrls: ['./all-cats.component.css']
 })
-export class AllCatsComponent  {
+export class AllCatsComponent {
 
   cats: Cat[]|undefined;
 
-  constructor(private catsService:CatService) {
+  constructor(private catsService:CatService,
+    private router: Router) { 
+      this.fetchCats();
+  }
+
+  
+ 
+
+  fetchCats():void {
     this.catsService.getAll().subscribe(cats => {
       this.cats = cats;
-      console.log(this.cats)
     })
   }
+
+ delete(catId:number){
+  console.log("Hello")  
+    this.catsService.deleteCat(catId).subscribe(res => {
+      this.fetchCats()
+    }) 
+ }
+  
+
+
+
+
 
 
 
