@@ -2,7 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    public class RegisterUserModel
+    public class RegisterRequestModel
     {
         [Required]
         public string Username { get; set; }

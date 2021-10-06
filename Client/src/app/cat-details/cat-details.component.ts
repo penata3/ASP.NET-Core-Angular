@@ -11,6 +11,7 @@ import { CatService } from '../services/cat.service';
 export class CatDetailsComponent  {
 
   cat: Cat|undefined;
+  
   constructor(private route:ActivatedRoute,private catsSerice: CatService) {
     route.params.subscribe(res => {
       this.catsSerice.getCatById(res['id']).subscribe(res => {

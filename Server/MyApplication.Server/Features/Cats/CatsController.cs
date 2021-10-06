@@ -18,7 +18,7 @@
 
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult<int>> Create(CreateCatModel model)
+        public async Task<ActionResult<int>> Create(CreateRequestCatModel model)
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 

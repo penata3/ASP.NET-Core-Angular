@@ -41,7 +41,7 @@
                  .ToListAsync();
         }
 
-        public async Task<int> CraeteCat(CreateCatModel model, string userId)
+        public async Task<int> CraeteCat(CreateRequestCatModel model, string userId)
         {
             var cat = new Cat()
             {

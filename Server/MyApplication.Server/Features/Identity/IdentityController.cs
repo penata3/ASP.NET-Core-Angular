@@ -21,7 +21,7 @@
 
         [HttpPost]
         [Route(nameof(Register))]
-        public async Task<ActionResult> Register(RegisterUserModel model)
+        public async Task<ActionResult> Register(RegisterRequestModel model)
         {
 
             var user = new User()
@@ -43,7 +43,7 @@
 
         [HttpPost]
         [Route(nameof(Login))]
-        public async Task<ActionResult<object>> Login(LoginUserModel model)
+        public async Task<ActionResult<object>> Login(LoginRequestModel model)
         {
             var user = await this.userManager.FindByNameAsync(model.Username);
 

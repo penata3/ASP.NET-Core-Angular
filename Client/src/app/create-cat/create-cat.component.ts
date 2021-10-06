@@ -27,7 +27,7 @@ export class CreateCatComponent {
     if(this.catForm.invalid){return }
     this.catService.create(this.catForm.value).subscribe(res => {
       this.catForm.reset();
-      this.router.navigate(['/all'])
+      this.router.navigate(['/all'])  
     });
   
   }

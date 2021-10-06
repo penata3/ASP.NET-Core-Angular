@@ -6,7 +6,7 @@
 
     public interface ICatsService
     {
-        Task<int> CraeteCat(CreateCatModel model, string userId);
+        Task<int> CraeteCat(CreateRequestCatModel model, string userId);
 
         Task<IEnumerable<CatListingServiceModel>> CatsByUserAsync(string userId);
 
