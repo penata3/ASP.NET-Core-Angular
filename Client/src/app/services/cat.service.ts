@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Cat } from '../models/cat';
 
 @Injectable({
   providedIn: 'root'
@@ -9,10 +10,16 @@ import { environment } from 'src/environments/environment';
 export class CatService {
 
 
-  private createUrl = environment.apiUrl + 'cats'
+  private catsUrl = environment.apiUrl + 'cats'
+
   constructor(private http:HttpClient) { }
 
-  create(data:any): Observable<any> {
-    return this.http.post(this.createUrl, data)
+  create(data:any): Observable<Cat> {
+    return this.http.post<Cat>(this.catsUrl, data)
+  }
+
+  getAll():Observable<Cat[]> {
+  
+    return this.http.get<Cat[]>(this.catsUrl);    
   }
 }

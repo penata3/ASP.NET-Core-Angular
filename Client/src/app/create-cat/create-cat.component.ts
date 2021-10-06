@@ -24,6 +24,7 @@ export class CreateCatComponent {
   create(){
     if(this.catForm.invalid){return }
     this.catService.create(this.catForm.value).subscribe();
+    this.catForm.reset(); 
   }
 
   get imageUrl(){  
