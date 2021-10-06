@@ -93,7 +93,7 @@
                 return BadRequest("Canot delete this object");
             }
 
-            return Ok("Succesfully deleted");
+            return Ok();
 
         }
     }

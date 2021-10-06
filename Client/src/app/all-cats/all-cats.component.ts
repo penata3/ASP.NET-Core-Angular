@@ -17,9 +17,6 @@ export class AllCatsComponent {
       this.fetchCats();
   }
 
-  
- 
-
   fetchCats():void {
     this.catsService.getAll().subscribe(cats => {
       this.cats = cats;
@@ -29,8 +26,9 @@ export class AllCatsComponent {
  delete(catId:number){
   console.log("Hello")  
     this.catsService.deleteCat(catId).subscribe(res => {
-      this.fetchCats()
-    }) 
+      this.fetchCats();
+    });    
+     
  }
   
 

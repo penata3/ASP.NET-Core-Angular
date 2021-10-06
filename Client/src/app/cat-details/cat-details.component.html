@@ -28,9 +28,13 @@
         </div>
         <!-- / column -->
 
-        <div class="col-md-7">
+        <div class="col-md-7" *ngIf='cat?.imageUrl'>
             <img [src]='cat?.imageUrl' alt="project-image" class="rounded">
             <!-- / project-info-box -->
+        </div>
+        <div class="col-md-7" *ngIf='!cat?.imageUrl'>
+            <img [src]='cat?.imageUrl' alt="project-image" class="rounded">
+            <p>Loading...</p>
         </div>
         <!-- / column -->
     </div>
