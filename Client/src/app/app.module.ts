@@ -16,7 +16,9 @@ import { SecondaryAuthGuardService } from './services/secondary-auth-guard.servi
 import { AllCatsComponent } from './all-cats/all-cats.component';
 import { CatDetailsComponent } from './cat-details/cat-details.component';
 import { CatUpdateComponent } from './cat-update/cat-update.component';
-
+import { ErrorInterceptorService } from './services/error-interceptor.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -34,13 +36,24 @@ import { CatUpdateComponent } from './cat-update/cat-update.component';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot(),
   ],
-  providers: [AuthService,AuthGuardService,SecondaryAuthGuardService,
+  providers: [
+    AuthService,
+    AuthGuardService,
+    SecondaryAuthGuardService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
       multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass:ErrorInterceptorService,
+      multi:true
     }
+  
   ],
   bootstrap: [AppComponent]
 })
