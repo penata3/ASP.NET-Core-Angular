@@ -15,6 +15,7 @@ import { HeaderComponent } from './header/header.component';
 import { SecondaryAuthGuardService } from './services/secondary-auth-guard.service';
 import { AllCatsComponent } from './all-cats/all-cats.component';
 import { CatDetailsComponent } from './cat-details/cat-details.component';
+import { CatUpdateComponent } from './cat-update/cat-update.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { CatDetailsComponent } from './cat-details/cat-details.component';
     CreateCatComponent,
     HeaderComponent,
     AllCatsComponent,
-    CatDetailsComponent
+    CatDetailsComponent,
+    CatUpdateComponent
   ],
   imports: [
     BrowserModule,

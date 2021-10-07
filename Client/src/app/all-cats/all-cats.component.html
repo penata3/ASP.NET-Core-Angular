@@ -1,11 +1,12 @@
 <div class="card-group">
     <div class='col-md-3' *ngFor="let cat of cats">
-        <div class=" card">
-            <img class="card-img-top" [src]='cat.imageUrl' alt="Card image cap">
+        <div class="card">
+            <img class="card-img-top" [src]='cat?.imageUrl' alt="Card image cap">
             <div class="card-body">
                 <p class="card-text">{{cat.description}}</p>
                 <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                 <button class='btn btn-primary' routerLink='{{cat.id}}'>Show Details</button>
+                <button class='btn btn-warning' routerLink='/edit/{{cat.id}}'>Edit</button>
                 <button class='btn btn-danger' (click)='delete(cat.id)'>Delete</button>
             </div>
         </div>

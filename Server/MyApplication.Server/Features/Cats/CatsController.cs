@@ -32,9 +32,7 @@
         //    var allCats = await this.catsService.GetAllCatsAsync();
         //    return allCats;
         //}
-
-        
-
+       
         [HttpGet]
         [Authorize]
         public async Task<IEnumerable<CatListingServiceModel>> GetAllByUser()

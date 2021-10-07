@@ -27,17 +27,6 @@ export class AllCatsComponent {
   console.log("Hello")  
     this.catsService.deleteCat(catId).subscribe(res => {
       this.fetchCats();
-    });    
-     
+    });        
  }
-  
-
-
-
-
-
-
-
-
-
 }
