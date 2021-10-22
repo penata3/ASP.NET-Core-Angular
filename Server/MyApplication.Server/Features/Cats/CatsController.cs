@@ -3,6 +3,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using MyApplication.Server.Features.Cats.Models;
+    using MyApplication.Server.Infrastructure.Services;
     using System.Collections.Generic;
     using System.Security.Claims;
     using System.Threading.Tasks;
@@ -10,10 +11,14 @@
     public class CatsController : ApiController
     {
         private readonly ICatsService catsService;
+        private readonly ICurrentUserService currentUser;
 
-        public CatsController(ICatsService catsService)
+        public CatsController(
+            ICatsService catsService,
+            ICurrentUserService currentUser)
         {
             this.catsService = catsService;
+            this.currentUser = currentUser;
         }
 
         [Authorize]
@@ -37,7 +42,7 @@
         [Authorize]
         public async Task<IEnumerable<CatListingServiceModel>> GetAllByUser()
         {
-            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var userId = this.currentUser.GetId();
 
             var catsByUser = await this.catsService.CatsByUserAsync(userId);
             return catsByUser;

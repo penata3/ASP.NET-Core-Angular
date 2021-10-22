@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace MyApplication.Server.Features.Cats.Models
+﻿namespace MyApplication.Server.Features.Cats.Models
 {
+    using System.ComponentModel.DataAnnotations;
+
     public class UpdateCatRequestModel
     {
         public int Id { get; set; }

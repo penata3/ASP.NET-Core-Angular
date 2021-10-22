@@ -12,6 +12,7 @@ namespace MyApplication.Server.Infrastructure
     using MyApplication.Server.Data.Models;
     using MyApplication.Server.Features.Cats;
     using MyApplication.Server.Features.Identity;
+    using MyApplication.Server.Infrastructure.Services;
     using System.Text;
 
     public static class ServiceCollectionExtenstions
@@ -78,6 +79,7 @@ namespace MyApplication.Server.Infrastructure
         public static IServiceCollection AddApplicationServices(this IServiceCollection services) 
         {
             services.AddTransient<IIdentityService, IdentityService>();
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
             services.AddTransient<ICatsService, CatsService>();
             return services;
         }

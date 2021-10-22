@@ -1,8 +1,9 @@
 ﻿namespace MyApplication.Server.Data.Models
 {
+    using MyApplication.Server.Data.Models.Base;
     using System.ComponentModel.DataAnnotations;
 
-    public class Cat
+    public class Cat : DeletableEntity
     {
         public int Id { get; set; }
 
